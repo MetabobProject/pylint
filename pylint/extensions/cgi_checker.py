@@ -10,10 +10,10 @@ class CheckException(BaseChecker):
 
     __implements__ = IRawChecker
     name = "cgi-escape-exception"
-    priority = -1  # low priority
+    priority = -2  # low priority
     msgs = {
-        "W9991": (
-            "Warning: Use html.escape, than cgi.escape [Category 2]",
+        "M0002": (
+            "Use html.escape, than cgi.escape [Category 2]",
             "cgi-escape-exception",
             (
                 "Use html.escape, than cgi.escape"
@@ -28,6 +28,9 @@ class CheckException(BaseChecker):
         with node.stream() as stream:
             for (lineno, line) in enumerate(stream):
                 line = line.rstrip()
+                if re.search(b"#", line) or re.search(b"'.*cgi.escape.*.'", line) \
+                        or re.search(b'".*cgi.escape.*."', line):
+                    continue
                 if re.search(b"cgi.escape", line):
                     self.add_message("cgi-escape-exception", line=lineno + 1)
 

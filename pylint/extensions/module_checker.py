@@ -9,7 +9,7 @@ class ModuleUpdate(BaseChecker):
 
     name = "module_update"
     msgs = {
-        "W2999": (
+        "M0004": (
             "Prefer importing %r instead of %r [Category 4]",
             "update-module",
             "Used when a module imported has a preferred replacement module.",
@@ -17,6 +17,7 @@ class ModuleUpdate(BaseChecker):
     }
     options = ()
     priority = -2  # low priority
+
 
     def visit_importfrom(self, node: nodes.ImportFrom) -> None:
         """triggered when a from statement is seen"""

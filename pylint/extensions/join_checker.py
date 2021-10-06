@@ -19,7 +19,7 @@ class JoinList(BaseChecker):
 
     name = "refactoring"
     msgs = {
-        "R2999": (
+        "M0001": (
             "Replace the join method arguments with list name [Category 1] ",
             "join-list",
             (
@@ -33,7 +33,11 @@ class JoinList(BaseChecker):
     def process_module(self, node: nodes.Module) -> None:
         with node.stream() as stream:
             for (line_num, line) in enumerate(stream):
+                line = line.lstrip()
                 line = line.rstrip()
+                if re.search(b"#", line) or re.search(b"'.*join.*.'", line)\
+                        or re.search(b'".*join.*."', line):
+                    continue
                 if re.search(b"join", line):
                     if check_line(line[:-1]):
                         self.add_message("join-list", line=line_num + 1)

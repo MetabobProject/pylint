@@ -30,10 +30,11 @@ MSG_TYPES = {
     "W": "warning",
     "E": "error",
     "F": "fatal",
+    "M": "metabob",
 }
 MSG_TYPES_LONG = {v: k for k, v in MSG_TYPES.items()}
 
-MSG_TYPES_STATUS = {"I": 0, "C": 16, "R": 8, "W": 4, "E": 2, "F": 1}
+MSG_TYPES_STATUS = {"I": 0, "C": 16, "R": 8, "W": 4, "E": 2, "F": 1, "M": 32}
 
 # You probably don't want to change the MAIN_CHECKER_NAME
 # This would affect rcfile generation and retro-compatibility

@@ -12,7 +12,7 @@ class CheckException(BaseChecker):
     name = "class-object-exception"
     priority = -2  # low priority
     msgs = {
-        "W1871": (
+        "M0003": (
             "Use obj.__class__ method, instead of type(obj) [Category 3]",
             "class-object-exception",
             (
@@ -28,9 +28,9 @@ class CheckException(BaseChecker):
         with node.stream() as stream:
             for (lineno, line) in enumerate(stream):
                 line = line.rstrip()
-                if re.match(b"#" or "\\'" or '\"', line):
-                    print("Comment found!")
-                    break
+                if re.search(b"#", line) or re.search(b"'.*type\\(.*.'", line) \
+                        or re.search(b'".*type\\(.*."', line):
+                    continue
                 elif re.search(b"type\\(", line):
                     self.add_message("class-object-exception", line=lineno + 1)
 
